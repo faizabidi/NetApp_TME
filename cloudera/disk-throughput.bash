@@ -16,7 +16,7 @@ sleep 30
 # Run read test
 nohup /home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \
     --vector=readSpeed --dir=/mnt/disk1/ \
-    --logfile=./diskbench-write.log
+    --logfile=./diskbench-read.log
 
 
 # Remove the file created
