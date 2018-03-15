@@ -7,15 +7,15 @@ cd /home/faiz89/git/NetApp_TME && git pull && cd cloudera
 chmod +x diskbench.pl
 
 # Run write test
-nohup /home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \ 
-    --vector=writeSpeed --dir=/mnt/disk1/ \ 
+nohup /home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \
+    --vector=writeSpeed --dir=/mnt/disk1/ \
     --logfile=./diskbench-write.log 
 
 sleep 30
 
 # Run read test
-nohup /home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \ 
-    --vector=readSpeed --dir=/mnt/disk1/ \ 
+nohup /home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \
+    --vector=readSpeed --dir=/mnt/disk1/ \
     --logfile=./diskbench-write.log
 
 
