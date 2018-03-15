@@ -7,14 +7,16 @@ cd /home/faiz89/git/NetApp_TME && git pull && cd cloudera
 chmod +x diskbench.pl
 
 # Run write test
-/home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \
-    --vector=writeSpeed --dir=/mnt/disk1/ --logfile=./diskbench-write.log
+nohup /home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \ 
+    --vector=writeSpeed --dir=/mnt/disk1/ \ 
+    --logfile=./diskbench-write.log 
 
 sleep 30
 
 # Run read test
-/home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \
-    --vector=readSpeed --dir=/mnt/disk1/ --logfile=./diskbench-read.log
+nohup /home/faiz89/git/NetApp_TME/cloudera/diskbench.pl --bs=64K --count=5000000 \ 
+    --vector=readSpeed --dir=/mnt/disk1/ \ 
+    --logfile=./diskbench-write.log
 
 
 # Remove the file created
