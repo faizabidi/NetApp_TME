@@ -3,6 +3,11 @@
 BLOCK_SIZE=$1
 COUNT=$2
 
+if [ $# != 2 ]; then
+    echo "Enter the block size and count value for dd write tests."
+    exit
+fi
+
 # Write test
 sudo dd if=/dev/zero of=/mnt/disk1/dd-test.dat bs=$BLOCK_SIZEk count=$COUNT conv=fdatasync
 
