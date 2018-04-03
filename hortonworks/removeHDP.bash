@@ -208,3 +208,30 @@ sudo userdel -r tez
 sudo userdel -r yarn
 sudo userdel -r zeppelin
 sudo userdel -r zookeeper
+
+# Try to find and delete any folder left
+sudo find / -name *ambari* -exec rm -r {} \;
+sudo find / -name *accumulo* -exec rm -r {} \;
+sudo find / -name *atlas* -exec rm -r {} \;
+sudo find / -name *beeline* -exec rm -r {} \;
+sudo find / -name *falcon* -exec rm -r {} \;
+sudo find / -name *flume* -exec rm -r {} \;
+sudo find / -name *hadoop* -exec rm -r {} \;
+sudo find / -name *hbase* -exec rm -r {} \;
+sudo find / -name *hcat* -exec rm -r {} \;
+sudo find / -name *hdfs* -exec rm -r {} \;
+sudo find / -name *hdp* -exec rm -r {} \;
+sudo find / -name *hive* -exec rm -r {} \;
+sudo find / -name *hiveserver2* -exec rm -r {} \;
+sudo find / -name *kafka* -exec rm -r {} \;
+sudo find / -name *mahout* -exec rm -r {} \;
+sudo find / -name *mapred* -exec rm -r {} \;
+sudo find / -name *oozie* -exec rm -r {} \;
+sudo find / -name *phoenix* -exec rm -r {} \;
+sudo find / -name *pig* -exec rm -r {} \;
+sudo find / -name *ranger* -exec rm -r {} \;
+sudo find / -name *slider* -exec rm -r {} \;
+sudo find / -name *sqoop* -exec rm -r {} \;
+sudo find / -name *storm* -exec rm -r {} \;
+sudo find / -name *yarn* -exec rm -r {} \;
+sudo find / -name *zookeeper* -exec rm -r {} \;
