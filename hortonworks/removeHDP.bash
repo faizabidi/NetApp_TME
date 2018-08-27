@@ -4,7 +4,8 @@
 ps -ef | grep hdfs | awk '{print $2}' | xargs sudo kill -9
 
 # Run the host cleanup script provided by ambari
-sudo python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py --silent --skip=users
+#sudo python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py --silent --skip=users
+sudo python /usr/lib/ambari-agent/lib/ambari_agent/HostCleanup.py --silent --skip=users
 
 # Remove Hadoop elements
 sudo yum remove hive\* -y
