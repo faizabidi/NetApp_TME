@@ -7,6 +7,9 @@ ps -ef | grep hdfs | awk '{print $2}' | xargs sudo kill -9
 #sudo python /usr/lib/python2.6/site-packages/ambari_agent/HostCleanup.py --silent --skip=users
 sudo python /usr/lib/ambari-agent/lib/ambari_agent/HostCleanup.py --silent --skip=users
 
+# Remove hdp-select
+sudo yum remove hdp-select -y
+
 # Remove Hadoop elements
 sudo yum remove hive\* -y
 sudo yum remove oozie\* -y
