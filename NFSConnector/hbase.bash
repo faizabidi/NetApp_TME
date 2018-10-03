@@ -9,19 +9,32 @@ if [ $# -ne 1 ]; then
 fi
 
 # Random write
-hbase pe --presplit=4 randomWrite --table=faiz_test --writeToWAL=False $CLIENTS
+hbase pe \
+    --presplit=4 \
+    --table=faiz_test \
+    --writeToWAL=False \
+    randomWrite $CLIENTS
 sleep 2m
 
 # Random read
-hbase pe --presplit=4 randomRead --table=faiz_test --writeToWAL=False $CLIENTS
+hbase pe --presplit=4 \
+    --table=faiz_test \
+    --writeToWAL=False \
+    randomRead $CLIENTS
 sleep 2m
 
 # Sequential write
-hbase pe --presplit=4 sequentialWrite --table=faiz_test --writeToWAL=False $CLIENTS
+hbase pe --presplit=4 \
+    --table=faiz_test \
+    --writeToWAL=False \
+    sequentialWrite $CLIENTS
 sleep 2m
 
 # Sequential read
-hbase pe --presplit=4 sequentialRead --table=faiz_test --writeToWAL=False $CLIENTS
+hbase pe --presplit=4 \
+    --table=faiz_test \
+    --writeToWAL=False \
+    sequentialRead $CLIENTS
 
 echo "All testing done."
 
