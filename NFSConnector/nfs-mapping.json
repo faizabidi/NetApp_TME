@@ -1,0 +1,34 @@
+{  
+   "spaces":[  
+      {  
+         "endpoints":[  
+            {  
+               "path":"/faiz_vol1",
+               "exportPath":"/faiz_vol1",
+               "hosts":[  
+                  "nfs://10.63.150.118:2049/",
+                  "nfs://10.63.150.64:2049/",
+                  "nfs://10.63.150.65:2049/",
+                  "nfs://10.63.150.66:2049/"
+               ]
+            }
+         ],
+         "name":"faiz_svm",
+         "options":{  
+            "nfsAuthScheme":"AUTH_SYS",
+            "nfsExportPath":"/faiz_vol1",
+            "nfsMountPort":-1,
+            "nfsPort":2049,
+            "nfsReadSizeBits":23,
+            "nfsRpcbindPort":111,
+            "nfsSplitSizeBits":30,
+            "nfsWriteSizeBits":23,
+            "nfsReadMinPoolThreads":32,
+            "nfsReadMaxPoolThreads":128,
+            "nfsWriteMinPoolThreads":32,
+            "nfsWriteMaxPoolThreads":128
+         },
+         "uri":"nfs://10.63.150.118:2049/"
+      }
+   ]
+}
