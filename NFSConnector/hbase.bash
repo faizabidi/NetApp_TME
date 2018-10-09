@@ -16,7 +16,6 @@ hbase pe \
     --table=faiz_test \
     --writeToWAL=False \
     --rows=3048576 \
-    #--size=2 \
     randomWrite $CLIENTS
 sleep 2m
 # Run 2
@@ -25,7 +24,6 @@ hbase pe \
     --table=faiz_test \
     --writeToWAL=False \
     --rows=3048576 \
-    #--size=2 \
     randomWrite $CLIENTS
 sleep 2m
 #####################################
@@ -51,7 +49,6 @@ hbase pe --presplit=4 \
     --table=faiz_test \
     --writeToWAL=False \
     --rows=3048576 \
-    #--size=2 \
     sequentialWrite $CLIENTS
 sleep 2m
 # Run 2
@@ -59,7 +56,6 @@ hbase pe --presplit=4 \
     --table=faiz_test \
     --writeToWAL=False \
     --rows=3048576 \
-    #--size=2 \
     sequentialWrite $CLIENTS
 sleep 2m
 #####################################
