@@ -22,13 +22,13 @@ sudo yum remove knox\* -y
 sudo yum remove storm\* -y
 sudo yum remove accumulo\* -y
 sudo yum remove falcon\* -y
-sudo yum remove ambari-metrics-hadoop-sink -y
+sudo yum remove ambari* -y
 sudo yum remove smartsense-hst -y
-sudo yum remove slider_2_4_2_0_258 -y
-sudo yum remove ambari-metrics-monitor -y
-sudo yum remove spark2_2_5_3_0_37-yarn-shuffle -y
-sudo yum remove spark_2_5_3_0_37-yarn-shuffle -y
-sudo yum remove ambari-infra-solr-client -y
+sudo yum remove slider* -y
+sudo yum remove spark2* -y
+sudo yum remove spark_* -y
+sudo yum remove ambari-infra* -y
+sudo yum remove mysql* -y
 
 # Stop ambari server and agent
 sudo ambari-server stop
