@@ -1,0 +1,68 @@
+#### Installing MIT KDC ####
+
+REF: 
+1. https://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.6.5/bk_security/content/_installing_and_configuring_the_kdc.html
+2. https://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.6.5/bk_security/content/_optional_install_a_new_mit_kdc.html
+
+Assumptions:
+1. You have rhel or Centos 7.x installed.
+
+Step 1: Installing MIT KDC server
+
+==> yum install krb5-server krb5-libs krb5-workstation
+
+Step  2: Using a text editor, open the KDC server configuration file, located by default here:
+==> vi /etc/krb5.conf
+
+Change the [realms] section of this file by replacing the default “kerberos.example.com” setting for the kdc and admin_server properties with the Fully Qualified Domain Name of the KDC server host. Also, uncomment "default_realm" line. For example:
+
+==> [realms]
+ EXAMPLE.COM = {
+   kdc = master1.netapp.com
+   admin_server = master1.netapp.com
+}
+
+Step 3: Create the Kerberos Database
+
+==> kdb5_util create -s
+It will then show something like below:
+
+Loading random data
+Initializing database '/var/kerberos/krb5kdc/principal' for realm 'EXAMPLE.COM',
+master key name 'K/M@EXAMPLE.COM'
+You will be prompted for the database Master Password.
+It is important that you NOT FORGET this password.
+Enter KDC database master key: (I put in “admin” here usually)
+Re-enter KDC database master key to verify: 
+
+Step 4:Start the KDC
+
+==> systemctl start krb5kdc
+==> systemctl start kadmin
+
+Step 5: Create a Kerberos Admin
+
+Kerberos principals can be created either on the KDC machine itself or through the network, using an “admin” principal. The following instructions assume you are using the KDC machine and using the kadmin.local command line administration utility. Using kadmin.local on the KDC machine allows you to create principals without needing to create a separate "admin" principal before you start.
+
+Create a KDC admin by creating an admin principal.
+==> kadmin.local -q "addprinc admin/admin"
+
+It will show something like the below:
+
+Authenticating as principal root/admin@EXAMPLE.COM with password.
+WARNING: no policy specified for admin/admin@EXAMPLE.COM; defaulting to no policy
+Enter password for principal "admin/admin@EXAMPLE.COM": (I put in “admin” here usually)
+Re-enter password for principal "admin/admin@EXAMPLE.COM": 
+Principal "admin/admin@EXAMPLE.COM" created.
+
+Confirm that this admin principal has permissions in the KDC ACL. Using a text editor, open the KDC ACL file:
+==> vi /var/kerberos/krb5kdc/kadm5.acl
+
+Ensure that the KDC ACL file includes an entry so to allow the admin principal to administer the KDC for your specific realm. When using a realm that is different than EXAMPLE.COM, be sure there is an entry for the realm you are using. If not present, principal creation will fail. For example, for an admin/admin@HADOOP.COM principal, you should have an entry:
+
+*/admin@HADOOP.COM *
+
+Restart admin
+==> systemctl restart kadmin
+
+That’s it! Let’s move on to enabling Kerberos in our HDP cluster.
