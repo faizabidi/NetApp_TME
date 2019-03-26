@@ -1,0 +1,20 @@
+REF: https://docs.hortonworks.com/HDPDocuments/HDP3/HDP-3.0.1/authentication-with-kerberos/content/authe_spnego_enabling_browser_access_to_a_spnego_enabled_web_ui.html
+
+How to access a kerberized HDP UI
+ 
+Step 1: Depending on what OS you use, install Kerberos on your local machine. If you are on a Mac, Kerberos would already be there. Google on the installation steps, should be straightforward.
+ 
+Step 2: ssh to .144 or where ever the KDC server is installed. Copy the file /etc/krb5.conf and put it on your local machine at the exact same place => /etc/krb5.conf
+=> scp 10.63.150.144:/etc/krb5.conf /etc/krb5.conf
+ 
+Step 3: Copy an existing keytab from the KDC cluster. In my case, I copied faiz89.keytab
+=> scp 10.63.150.144:/etc/security/keytabs/faiz89.keytab .
+ 
+Step 4: Run kint on your local machine. “kinit obtains and caches an initial ticket-granting ticket for principal.”
+=> kinit -kt faiz89.keytab faiz89@EXAMPLE.COM  
+ 
+Step 5: Open Firefox (can use Chrome too but steps are a bit different for it. And anyway, Firefox is better than Chrome : )) and type “about:config” in the url. We need to change two parameters.
+=> network.negotiate-auth.trusted-uris – Change its value to “.netapp.com” because that’s our cluster domain in our setup.
+=> network.negotiate-auth.delegation-uris - Change its value to “.netapp.com” because that’s our cluster domain in our setup.
+ 
+That’s it. The kerberized UI should work now.
