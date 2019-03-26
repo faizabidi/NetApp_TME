@@ -1,0 +1,48 @@
+REF: 
+1. https://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.6.5/bk_security/content/_use_an_exisiting_mit_kdc.html
+2. https://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.6.5/bk_security/content/creating_service_principals_and_keytab_files_for_hdp.html
+
+Step 1: Installing the JCE
+
+Before enabling Kerberos in the cluster, you must deploy the Java Cryptography Extension (JCE) security policy files on the Ambari Server and on all hosts in the cluster.
+
+If you are using Oracle JDK, you must distribute and install the JCE on all hosts in the cluster, including the Ambari Server. Be sure to restart Ambari Server after installing the JCE. But if you are using OpenJDK, some distributions of the OpenJDK (such as RHEL/CentOS and Ubuntu) come with unlimited strength JCE automatically and therefore, installation of JCE is not required.
+
+Step 2: Enable Kerberos
+
+==> Log in to Ambari Web and Browse to Admin > Kerberos
+==> Click “Enable Kerberos” to launch the wizard.
+==> Select the type of KDC you are using and confirm you have met the prerequisites.
+==> Provide information about the KDC and admin account.
+In the KDC section, enter the following information:
+
+In the KDC Host field, the IP address or FQDN for the KDC host. Optionally a port number may be included.
+
+In the Realm name field, the default realm to use when creating service principals. In my case, it was EXAMPLE.COM
+
+In the Kadmin Host field, the IP address or FQDN for the KDC administrative host. 
+
+The Admin principal and password that will be used to create principals and keytabs.
+
+Proceed with the install. If you have followed all the guides in this repo, “admin/admin” would be the username and “admin” as the password.
+
+Click Next to start the process. Exit the wizard when complete.
+
+Step 3: Running jobs
+
+Let’s assume that you want to use the user “faiz89” to run jobs. 
+
+1. The first thing you want to make sure is that user “faiz” exists on all the nodes in the cluster. 
+2. Create a principal of that user. 
+==> Type “kadmin.local”
+==> kadmin:  addprinc faiz@EXAMPLE.COM and give a password
+3. Generate keytabs for this user.
+==> Type “kadmin.local”
+==> kadmin.local:  xst -k faiz.keytab faiz@EXAMPLE.COM
+4. Obtain a ticket for this user
+==> Log in as the user and run “kinit”. Do a “klist" to check the ticket and when does it expire. 
+5. Make sure this new user has permissions to run on HDFS or NFS. For example, you might get something like
+“Permission denied: user=faiz, access=WRITE, inode="/user":hdfs:hadoop:drwxr-xr-x” if this new user hasn’t been granted permissions.
+6. Run a test job to confirm - hadoop jar hadoop-mapreduce-examples.jar pi 10 100
+
+That’s it!
