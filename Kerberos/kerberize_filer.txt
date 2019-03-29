@@ -1,0 +1,26 @@
+In order to configure the ONATP filer, we need to do three things:
+
+Step 1: DNS configure
+=> dns host create -vserver <> -address <MIT server IP> -hostname <FQDN for MIT server>
+
+Step 2: Realm	configuration (assuming your KDC is MIT, realm name is EXAMPLE.COM)
+=> kerberos realm create -realm	EXAMPLE.COM -kdc-vendor	Other -kdc-ip 10.0.1.32 \
+	-kdc-port 88 -clock-skew 5 -adminserver-ip 10.0.1.32 -adminserver-port 749 \
+	-vserver svm_NFS_HDP
+
+Step 3: Interface configuration (assuming MIT admin principal was admin/admin@EXAMPLE.COM; spn’s format is nfs/vservers_name.realm_name_lowercase@real_name)
+=> kerberos interface modify -vserver svm_NFS_HDP -lif svm_NFS_HDP_data_lif -kerberos enabled \
+	-spn nfs/svm_NFS_HDP.example.com@EXAMPLE.COM -admin-username admin/admin@EXAMPLE.COM
+
+
+Testing if it worked:
+
+Step 1: Add svm IP information to /etc/hosts file on the MIT server
+=> 10.0.1.248 svm_nfs_hdp.example.com svm_nfs_hdp
+(Assuming 10.0.1.248 is your svm data IP)
+
+Step 2: Try to mount it
+=> mount -o vers=3,sec=krb5 10.0.1.248:/nfs_qats_kerberos /mnt/test/
+
+If the mount worked that means it worked overall. If you get permission denied or other errors,
+It probably means we need to fix something else.
