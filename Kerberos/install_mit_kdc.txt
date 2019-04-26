@@ -11,7 +11,7 @@ Step 1: Installing MIT KDC server
 
 ==> yum install krb5-server krb5-libs krb5-workstation
 
-Step  2: Using a text editor, open the KDC server configuration file, located by default here:
+Step  2: Using a text editor, open the KDC server configuration file and kdc.conf, located by default here:
 ==> vi /etc/krb5.conf
 
 Change the [realms] section of this file by replacing the default “kerberos.example.com” setting for the kdc and admin_server properties with the Fully Qualified Domain Name of the KDC server host. Also, uncomment "default_realm" line. For example:
@@ -21,6 +21,10 @@ Change the [realms] section of this file by replacing the default “kerberos.ex
    kdc = master1.netapp.com
    admin_server = master1.netapp.com
 }
+
+==> vi /var/kerberos/krb5kdc/kdc.conf
+
+Make sure that you update the REALM information.
 
 Step 3: Create the Kerberos Database
 
@@ -61,6 +65,8 @@ Confirm that this admin principal has permissions in the KDC ACL. Using a text e
 Ensure that the KDC ACL file includes an entry so to allow the admin principal to administer the KDC for your specific realm. When using a realm that is different than EXAMPLE.COM, be sure there is an entry for the realm you are using. If not present, principal creation will fail. For example, for an admin/admin@HADOOP.COM principal, you should have an entry:
 
 */admin@HADOOP.COM *
+
+You will need to manually edit this file to make sure that the correct admin name and REALM is used.
 
 Restart admin
 ==> systemctl restart kadmin
