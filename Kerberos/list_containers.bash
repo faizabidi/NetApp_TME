@@ -30,5 +30,5 @@ extractNumberFromJobId
 extractAppAttempt
 containerList
 
-echo "To get container logs, just do 'yarn logs -applicationId application_id -containerId container_id'"
+echo "To get container logs, just do 'yarn logs -applicationId $APPLICATIONID -containerId container_id'"
 
