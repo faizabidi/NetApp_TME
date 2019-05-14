@@ -14,12 +14,12 @@ extractNumberFromJobId () {
 }
 
 extractAppAttempt () {
-	APPATTEMPT="$(yarn applicationattempt -list application_1557511521030_0017 | awk '{print $1}' | grep appattempt)"
+	APPATTEMPT="$(yarn applicationattempt -list $APPLICATIONID | awk '{print $1}' | grep appattempt)"
 	echo "Appattempt id is" $APPATTEMPT
 }
 
 containerList () {
-	ALLCONTAINERS="$(yarn container -list appattempt_1557511521030_0017_000001 | awk '{print $1}' | grep container_)"
+	ALLCONTAINERS="$(yarn container -list $APPATTEMPT | awk '{print $1}' | grep container_)"
 	echo "All the containers in the $JOBID are:"
 	for container in "${ALLCONTAINERS[@]}"; do
 		echo "$container"
